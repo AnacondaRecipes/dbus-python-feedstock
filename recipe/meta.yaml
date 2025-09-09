@@ -1,13 +1,13 @@
 {% set name = "dbus-python" %}
-{% set version = "1.2.18" %}
+{% set version = "1.4.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 92bdd1e68b45596c833307a5ff4b217ee6929a1502f5341bae28fd120acf7260
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 991666e498f60dbf3e49b8b7678f5559b8a65034fdf61aae62cdecdb7d89c770
 
 build:
   number: 0
@@ -25,9 +25,14 @@ requirements:
   host:
     - dbus
     - glib
-    - pip >=21.3
+    - pip
     - python
+    - meson-python >=0.8.1
+    - meson >=0.60.0
+    - ninja
+    - patchelf
     - setuptools
+    - wheel
   run:
     - dbus
     - python
@@ -57,6 +62,8 @@ about:
     This package provides a Python interface to D-Bus.
 
     See the dbus description for more information about D-Bus in general.
+
+
 
 extra:
   recipe-maintainers:
