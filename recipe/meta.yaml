@@ -11,28 +11,25 @@ source:
 
 build:
   number: 0
-  skip: true  # [win]
-  script:
-    - cp $BUILD_PREFIX/share/gnuconfig/config.* ./build-aux  # [unix]
-    - {{ PYTHON }} -m pip install . -vv
+  skip: true  # [win or py<37]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
-    - gnuconfig  # [unix]
-    - make  # [unix]
-    - pkg-config  # [unix]
+    - pkg-config
+    - meson >=0.60.0
+    - ninja-base
+    - patchelf
   host:
-    - dbus
-    - glib
     - pip
     - python
     - meson-python >=0.8.1
-    - meson >=0.60.0
-    - ninja
-    - patchelf
     - setuptools
     - wheel
+    - dbus
+    - glib
   run:
     - dbus
     - python
@@ -43,13 +40,10 @@ test:
   requires:
     - pip
   commands:
-    # check requirements
-    - python -m pip check
+    - pip check
 
 about:
-  home: http://www.freedesktop.org/wiki/Software/DBusBindings/#python
-  dev_url: https://gitlab.freedesktop.org/dbus/dbus-python
-  doc_url: https://dbus.freedesktop.org/doc/dbus-python/
+  home: https://www.freedesktop.org/wiki/Software/DBusBindings/#python
   license: MIT
   license_family: MIT
   license_file: COPYING
@@ -62,8 +56,8 @@ about:
     This package provides a Python interface to D-Bus.
 
     See the dbus description for more information about D-Bus in general.
-
-
+  dev_url: https://gitlab.freedesktop.org/dbus/dbus-python
+  doc_url: https://dbus.freedesktop.org/doc/dbus-python
 
 extra:
   recipe-maintainers:
