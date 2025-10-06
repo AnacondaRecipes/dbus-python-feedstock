@@ -1,33 +1,35 @@
 {% set name = "dbus-python" %}
-{% set version = "1.2.18" %}
+{% set version = "1.4.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 92bdd1e68b45596c833307a5ff4b217ee6929a1502f5341bae28fd120acf7260
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 991666e498f60dbf3e49b8b7678f5559b8a65034fdf61aae62cdecdb7d89c770
 
 build:
   number: 0
-  skip: true  # [win]
-  script:
-    - cp $BUILD_PREFIX/share/gnuconfig/config.* ./build-aux  # [unix]
-    - {{ PYTHON }} -m pip install . -vv
+  skip: true  # [win or py<37]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
-    - gnuconfig  # [unix]
-    - make  # [unix]
-    - pkg-config  # [unix]
+    - pkg-config
+    - meson >=0.60.0
+    - ninja-base
+    - patchelf
   host:
+    - pip
+    - python
+    - meson-python >=0.8.1
+    - setuptools
+    - wheel
     - dbus
     - glib
-    - pip >=21.3
-    - python
-    - setuptools
   run:
     - dbus
     - python
@@ -38,13 +40,10 @@ test:
   requires:
     - pip
   commands:
-    # check requirements
-    - python -m pip check
+    - pip check
 
 about:
-  home: http://www.freedesktop.org/wiki/Software/DBusBindings/#python
-  dev_url: https://gitlab.freedesktop.org/dbus/dbus-python
-  doc_url: https://dbus.freedesktop.org/doc/dbus-python/
+  home: https://www.freedesktop.org/wiki/Software/DBusBindings/#python
   license: MIT
   license_family: MIT
   license_file: COPYING
@@ -57,6 +56,8 @@ about:
     This package provides a Python interface to D-Bus.
 
     See the dbus description for more information about D-Bus in general.
+  dev_url: https://gitlab.freedesktop.org/dbus/dbus-python
+  doc_url: https://dbus.freedesktop.org/doc/dbus-python
 
 extra:
   recipe-maintainers:
