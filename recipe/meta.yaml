@@ -1,13 +1,13 @@
 {% set name = "dbus-python" %}
-{% set version = "1.4.0" %}
+{% set version = "1.5.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 991666e498f60dbf3e49b8b7678f5559b8a65034fdf61aae62cdecdb7d89c770
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-','_') }}-{{ version }}.tar.gz
+  sha256: ac94ce330879108e5d37105164cc14b595bdf9326d2ce4a5acad6c1ab2bf6476
 
 build:
   number: 0
@@ -19,19 +19,19 @@ requirements:
     - {{ stdlib('c') }}
     - {{ compiler('c') }}
     - pkg-config
-    - meson >=0.60.0
     - ninja-base
     - patchelf
   host:
     - pip
     - python
     - meson-python >=0.8.1
+    - meson >=0.60.0
     - setuptools
     - wheel
-    - dbus
-    - glib
+    - dbus {{ dbus }}
+    - glib {{ glib }}
   run:
-    - dbus
+    - dbus >=1.8
     - python
 
 test:
@@ -41,11 +41,12 @@ test:
     - pip
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
 
 about:
   home: https://www.freedesktop.org/wiki/Software/DBusBindings/#python
-  license: MIT
-  license_family: MIT
+  license: MIT AND (GPL-2.0-or-later OR AFL-2.1)
+  license_family: Other
   license_file: COPYING
   summary: Python bindings for dbus
   description: |
