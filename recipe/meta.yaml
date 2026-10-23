@@ -28,7 +28,7 @@ requirements:
     - meson-python >=0.8.1
     - setuptools
     - wheel
-    - dbus >=1.8
+    - dbus {{ dbus }}
     - glib {{ glib }}
   run:
     - dbus >=1.8
