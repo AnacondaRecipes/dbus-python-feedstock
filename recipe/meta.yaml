@@ -19,13 +19,13 @@ requirements:
     - {{ stdlib('c') }}
     - {{ compiler('c') }}
     - pkg-config
-    - meson >=0.60.0
     - ninja-base
     - patchelf
   host:
     - pip
     - python
     - meson-python >=0.8.1
+    - meson >=0.60.0
     - setuptools
     - wheel
     - dbus {{ dbus }}
