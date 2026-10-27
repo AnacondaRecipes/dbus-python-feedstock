@@ -1,5 +1,5 @@
 {% set name = "dbus-python" %}
-{% set version = "1.5.0" %}
+{% set version = "1.5.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-','_') }}-{{ version }}.tar.gz
-  sha256: ac94ce330879108e5d37105164cc14b595bdf9326d2ce4a5acad6c1ab2bf6476
+  sha256: 57423cf87d09b7d084f420b55b737fe654c33339b06df77945620d97795c6ac4
 
 build:
   number: 0
@@ -26,10 +26,12 @@ requirements:
     - python
     - meson-python >=0.8.1
     - meson >=0.60.0
-    - setuptools
-    - wheel
     - dbus {{ dbus }}
     - glib {{ glib }}
+    - ninja
+    - patchelf
+    - setuptools
+    - wheel
   run:
     - dbus >=1.8
     - python
