@@ -26,10 +26,12 @@ requirements:
     - python
     - meson-python >=0.8.1
     - meson >=0.60.0
-    - setuptools
-    - wheel
     - dbus {{ dbus }}
     - glib {{ glib }}
+    - ninja
+    - patchelf
+    - setuptools
+    - wheel
   run:
     - dbus >=1.8
     - python
