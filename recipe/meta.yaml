@@ -12,7 +12,7 @@ source:
 build:
   number: 1
   skip: true  # [win or py<37]
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv -Csetup-args=-Dtests=disabled
 
 requirements:
   build:
